@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728093924) do
+ActiveRecord::Schema.define(version: 20160802063407) do
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.text     "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "disliked_users", force: :cascade do |t|
     t.integer  "disliker"
@@ -20,17 +36,36 @@ ActiveRecord::Schema.define(version: 20160728093924) do
     t.datetime "updated_at",    null: false
   end
 
-  create_table "liked_disliked_users", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "liked_disliked_user_id"
-    t.string   "status"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "like_dislikes", force: :cascade do |t|
+    t.integer  "liker_disliker_id"
+    t.integer  "liked_disliked_id"
+    t.boolean  "liked_status"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "liked_users", force: :cascade do |t|
     t.integer  "liker"
     t.integer  "liked_user"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "petitions", force: :cascade do |t|
+    t.integer  "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "article_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,5 +88,13 @@ ActiveRecord::Schema.define(version: 20160728093924) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "voter_id"
+    t.integer  "article_id"
+    t.string   "vote_status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
 end
