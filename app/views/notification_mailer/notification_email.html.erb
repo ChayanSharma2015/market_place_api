@@ -1,6 +1,12 @@
-<h1>Hi User!</h1>
+<h1>Hi <%= @recipient%></h1>
 <p>
-  This is to inform you that the article on which you commented/voted has been filed for petition.
+  Article Title : <%= @article.title%>
+</p>
+<p>
+  Article Description : <%= @article.description%>
+</p>
+<p>
+  Article Tags : <%= @article.tag_names %>
 </p>
 <h3>Regards</h3>
 <h2>Chayan Sharma</h2>
